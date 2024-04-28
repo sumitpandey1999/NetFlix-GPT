@@ -4,15 +4,15 @@ import { useState } from 'react';
 import { validateCredentials } from '../utils/validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
 import { updateProfile } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { NETFLIX_BG_URL ,NETFLIX_USER_ICON} from '../utils/constants';
 
 const Login = () => {
 
  
-  const nevigate = useNavigate()
+ 
   const dispatch = useDispatch()
 
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -40,13 +40,12 @@ const Login = () => {
 
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://example.com/jane-q-user/profile.jpg"
+            photoURL: NETFLIX_USER_ICON,
           }).then(() => {
             // Profile updated!
             // ...
             const { email, uid, displayName, photoURL } = auth.currentUser;
             dispatch(addUser({ email: email, uid: uid, displayName: displayName, photoURL:photoURL }))
-            nevigate("/Browse")
           }).catch((error) => {
             // An error occurred
             // ...
@@ -59,7 +58,7 @@ const Login = () => {
 
 
 
-          console.log(user)
+          // console.log(user)
           // const {email, uid, displayName} = user;
           // dispatch(addUser({email: email, uid:uid , displayName:displayName}))
           // ...
@@ -77,8 +76,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          console.log(user)
-          nevigate("/Browse")
+          // console.log(user)
 
 
         })
@@ -100,8 +98,7 @@ const Login = () => {
       <Header />
       <div className=''>
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/c1366fb4-3292-4428-9639-b73f25539794/3417bf9a-0323-4480-84ee-e1cb2ff0966b/IN-en-20240408-popsignuptwoweeks-perspective_alpha_website_large.jpg
-" alt="background"
+          src={NETFLIX_BG_URL}alt="background"
           className='absolute'
         />
 
