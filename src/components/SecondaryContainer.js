@@ -7,7 +7,7 @@ function SecondaryContainer() {
 const moviesData = useSelector((store)=>store.movies)
 
 if(!moviesData.popularMovies) return null
-console.log(moviesData.popularMovies)
+// console.log(moviesData.popularMovies)
 
   return (
     <div className='bg-black'>

@@ -4,6 +4,8 @@ import { useState, useEffect, createContext } from 'react';
 import { API_OPTIONS } from '../utils/constants';
 import usePopularMovies from '../Hooks/usePopularMovies';
 import SecondaryContainer from './SecondaryContainer';
+import { useSelector } from 'react-redux';
+import GptSearch from './GptSearch';
 
 
 export const MovieContext = createContext();
@@ -11,6 +13,8 @@ export const MovieContext = createContext();
 const Browse = () => {
 
   const [moviesData, setMovieData] = useState(null)
+
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch)
 
   const getNowPlayingMovies = async () => {
     const data = await fetch(
@@ -36,8 +40,16 @@ const Browse = () => {
     <MovieContext.Provider value={{ moviesData, setMovieData }}>
       <div>
         <Header />
-        <MainContainer />
-        <SecondaryContainer/>
+
+        {showGptSearch ? (
+          <GptSearch />
+        ) : (
+          <>
+            <MainContainer />
+            <SecondaryContainer />
+          </>
+        )}
+
       </div>
     </MovieContext.Provider>
   )
